@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /etc/profile.d/java.sh
+# source /etc/profile.d/java.sh
 
 _file_marker="/var/lib/mysql/.mysql-configured"
 

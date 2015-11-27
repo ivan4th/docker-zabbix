@@ -7,7 +7,7 @@ ENV REFRESHED_AT 2015-03-19
 # Install EPEL to have MySQL packages.
 RUN yum install -y http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 # Install Zabbix release packages.
-RUN yum install -y http://repo.zabbix.com/zabbix/2.4/rhel/6/x86_64/zabbix-release-2.4-1.el6.noarch.rpm
+RUN yum install -y http://repo.zabbix.com/zabbix/2.2/rhel/6/x86_64/zabbix-release-2.2-1.el6.noarch.rpm
 # Refresh
 RUN yum makecache
 # Installing Tools.
@@ -41,19 +41,10 @@ RUN yum -y -q install \
               php-snmp  \
               php-ldap
 
-# Install packages.
-RUN yum -y -q install java-1.8.0-openjdk \
-                      java-1.8.0-openjdk-devel
-
-COPY ./profile.d/java.sh /etc/profile.d/java.sh
-RUN chmod 755 /etc/profile.d/java.sh
-
-#RUN /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.25-3.b17.el6_6.x86_64/jre/bin/java
 # Install Zabbix Server and PHP UI.
 # Be aware of the Zabbix version number in the  zabbix22-dbfiles-mysql package(!).
 RUN yum -y -q install zabbix-agent  \
               zabbix-get            \
-              zabbix-java-gateway   \
               zabbix-sender         \
               zabbix-server         \
               zabbix-server-mysql   \
@@ -77,7 +68,6 @@ COPY ./zabbix/zabbix.ini 				        /etc/php.d/zabbix.ini
 COPY ./zabbix/httpd_zabbix.conf  		    /etc/httpd/conf.d/zabbix.conf
 COPY ./zabbix/zabbix.conf.php    		    /etc/zabbix/web/zabbix.conf.php
 COPY ./zabbix/zabbix_agentd.conf 		    /etc/zabbix/zabbix_agentd.conf
-COPY ./zabbix/zabbix_java_gateway.conf 	/etc/zabbix/zabbix_java_gateway.conf
 COPY ./zabbix/zabbix_server.conf 		    /etc/zabbix/zabbix_server.conf
 
 RUN chmod 640 /etc/zabbix/zabbix_server.conf
